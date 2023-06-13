@@ -15,9 +15,11 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   controllerAll allcontroller = Get.put(controllerAll());
-  List<TextField> textfil = [];
-  List<TextEditingController> _controllers = [];
-  var filepath;
+
+  // List<TextEditingController> controllerfortextfiled = [
+  //   TextEditingController()
+  // ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,15 +41,67 @@ class _HomepageState extends State<Homepage> {
               Textallfiled("Enter Email", allcontroller.EmailController),
               Textallfiled("Enter Address", allcontroller.addressController),
               Textallfiled("Enter Phone", allcontroller.MobileController),
-              Textallfiled(
-                  "Enter Education", allcontroller.educationController),
-              Textallfiled("Enter univercityName",
-                  allcontroller.univercitynameController),
-              Textallfiled("Enter passingYear", allcontroller.passingYear),
               ListView.builder(
-                itemCount: textfil.length,
+                itemCount: allcontroller.controllerforeducation.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
-                  return Textallfiled(index, _controllers);
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                        controller: allcontroller.controllerforeducation[index],
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText:
+                                'Enter Eduation With Passing year and univercity $index',
+                            prefix: IconButton(
+                                onPressed: () {
+                                  setState(() {});
+                                  allcontroller.controllerforeducation
+                                      .add(TextEditingController());
+                                },
+                                icon: Icon(Icons.add)),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                setState(() {});
+                                allcontroller.controllerforeducation
+                                    .removeAt(index);
+                              },
+                            ))),
+                  );
+                },
+              ),
+              ListView.builder(
+                itemCount: allcontroller.controllerfortextfiled.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                        controller: allcontroller.controllerfortextfiled[index],
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Enter Experience $index',
+                            prefix: IconButton(
+                              onPressed: () {
+                                setState(() {});
+
+                                allcontroller.controllerfortextfiled
+                                    .add(TextEditingController());
+                              },
+                              icon: Icon(Icons.add),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                setState(() {});
+                                allcontroller.controllerfortextfiled
+                                    .removeAt(index);
+                              },
+                            ))),
+                  );
                 },
               ),
               DropdownButton(
@@ -74,7 +128,8 @@ class _HomepageState extends State<Homepage> {
                   },
                 ),
               ),
-              if (filepath.isNotEmpty) Image.file(File(filepath)),
+              if (allcontroller.filepath.isNotEmpty)
+                Image.file(File(allcontroller.filepath)),
               ElevatedButton(
                   onPressed: () {
                     Get.to(() => resumePage());

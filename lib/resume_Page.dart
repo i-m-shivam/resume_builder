@@ -1,20 +1,15 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart ' as pw;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:resume_maker/HomePage.dart';
 import 'package:resume_maker/getallcontroller.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'package:screenshot/screenshot.dart';
+import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-controllerAll allcontroller = Get.put(controllerAll());
 
 class resumePage extends StatefulWidget {
   const resumePage({super.key});
@@ -25,14 +20,28 @@ class resumePage extends StatefulWidget {
 
 class _resumePageState extends State<resumePage> {
   ScreenshotController screenshotController = ScreenshotController();
+  controllerAll allcontroller = Get.put(controllerAll());
 
   @override
   Widget build(BuildContext context) {
-    return Screenshot(
-      controller: screenshotController,
-      child: SafeArea(
-        child: Scaffold(
-          body: SingleChildScrollView(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(actions: [
+          IconButton(
+              onPressed: () {
+                Get.to(() => Homepage());
+              },
+              icon: Icon(Icons.edit)),
+          IconButton(
+              onPressed: () {
+                setState(() {});
+                shareImage();
+              },
+              icon: Icon(Icons.share))
+        ]),
+        body: Screenshot(
+          controller: screenshotController,
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +79,7 @@ class _resumePageState extends State<resumePage> {
                   children: [
                     Expanded(
                       child: Container(
-                        height: 50.h,
+                        height: 20.h,
                         width: 40.w,
                         child: Column(
                           children: [
@@ -85,7 +94,7 @@ class _resumePageState extends State<resumePage> {
                       ),
                     ),
                     Container(
-                      height: 50.h,
+                      height: 20.h,
                       width: 40.w,
                       child: Column(
                         children: [
@@ -93,7 +102,7 @@ class _resumePageState extends State<resumePage> {
                             padding: const EdgeInsets.only(left: 8.0),
                             child: Center(
                               child: Text(
-                                "Experience",
+                                "Summury",
                                 style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.bold),
@@ -104,28 +113,112 @@ class _resumePageState extends State<resumePage> {
                             width: 25.w,
                             child: Divider(color: Colors.green),
                           ),
-                          Text(
-                            allcontroller.nameController.text.trim() +
-                                " from" +
-                                allcontroller.addressController.text.trim() +
-                                ". He has Earn Degree From The " +
-                                allcontroller.univercitynameController.text
-                                    .trim() +
-                                " at " +
-                                allcontroller.passingYear.text.trim() +
-                                " i work hard ",
-                            style: GoogleFonts.acme(fontSize: 8.sp),
-                          )
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "To be a dedicated technocrat and serve the company to the best of my ability utilizing all the skills as a Diploma gained during my life.",
+                              style: GoogleFonts.acme(fontSize: 8.sp),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      shareImage();
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "Eduaction",
+                    style: GoogleFonts.acme(fontSize: 12.sp),
+                  ),
+                ),
+                SizedBox(
+                  width: 50.w,
+                  child: Divider(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: allcontroller.controllerforeducation.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Text(
+                        "-> " +
+                            allcontroller.controllerforeducation[index].text
+                                .trim(),
+                        style: GoogleFonts.acme(fontSize: 10.sp),
+                      );
                     },
-                    child: Text("save to pdf"))
+                  ),
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "Experience",
+                    style: GoogleFonts.acme(fontSize: 12.sp),
+                  ),
+                ),
+                SizedBox(
+                  width: 50.w,
+                  child: Divider(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: allcontroller.controllerfortextfiled.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Text(
+                        "-> " +
+                            allcontroller.controllerfortextfiled[index].text
+                                .trim(),
+                        style: GoogleFonts.acme(fontSize: 10.sp),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "Declaration",
+                    style: GoogleFonts.acme(fontSize: 12.sp),
+                  ),
+                ),
+                SizedBox(
+                  width: 50.w,
+                  child: Divider(),
+                ),
+                Text(
+                    "I do here by conform that the information given in this C. V. is true and correct to the best of my knowledge in case any error or omission is found at later date; I shall be liable for the consequences.",
+                    style: GoogleFonts.acme(fontSize: 8.sp)),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: Column(
+                      children: [
+                        Text(allcontroller.nameController.text.trim(),
+                            style: GoogleFonts.acme()),
+                        Text(
+                            DateFormat("yyyy-MM-dd")
+                                .format(DateTime.now())
+                                .toString(),
+                            style: GoogleFonts.acme())
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),
@@ -141,7 +234,7 @@ class _resumePageState extends State<resumePage> {
         children: [
           Icon(enter_iconName, size: 12.sp),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 8.0, top: 4),
             child: Text(
               enterText,
               style: GoogleFonts.acme(fontSize: 8.sp),
@@ -153,14 +246,11 @@ class _resumePageState extends State<resumePage> {
   }
 
   shareImage() async {
-    final uint8List = await screenshotController.capture();
+    final uint8List = await screenshotController.capture(pixelRatio: 3);
     String tempPath = (await getTemporaryDirectory()).path;
-    String fileName = "myFile";
-    if (await Permission.storage.request().isGranted ||
-        await Permission.storage.request().isDenied) {
-      File file = await File('$tempPath/$fileName.png').create();
-      file.writeAsBytesSync(uint8List!);
-      await Share.shareFiles([file.path]);
-    }
+    String fileName = "resume_";
+    File file = await File('$tempPath/$fileName.png').create();
+    file.writeAsBytesSync(uint8List!);
+    await Share.shareFiles([file.path]);
   }
 }
