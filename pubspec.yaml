@@ -39,6 +39,15 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  get:
+  sizer: ^2.0.15
+  google_fonts: ^5.0.0
+  pdf:
+  screenshot: ^2.1.0
+  share_plus: 
+  path_provider:
+  image_picker:
+  permission_handler: 
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
