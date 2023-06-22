@@ -11,9 +11,10 @@ class controllerAll extends GetxController {
   List<TextEditingController> controllerfortextfiled = [
     TextEditingController()
   ];
-  List<TextEditingController> controllerforeducation = [
-    TextEditingController()
-  ];
+  List<TextEditingController> collegeName = [TextEditingController()];
+  List<TextEditingController> degreeName = [TextEditingController()];
+  List<TextEditingController> univercityName = [TextEditingController()];
+  List<TextEditingController> passingYear = [TextEditingController()];
 
   var selectedvalue = 'Flutter Developer';
   List<DropdownMenuItem<String>> get dropdownItems {

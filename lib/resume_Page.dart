@@ -141,12 +141,10 @@ class _resumePageState extends State<resumePage> {
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: allcontroller.controllerforeducation.length,
+                    itemCount: allcontroller.degreeName.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Text(
-                        "-> " +
-                            allcontroller.controllerforeducation[index].text
-                                .trim(),
+                        "-> " + allcontroller.degreeName[index].text.trim(),
                         style: GoogleFonts.acme(fontSize: 10.sp),
                       );
                     },
@@ -249,8 +247,9 @@ class _resumePageState extends State<resumePage> {
     final uint8List = await screenshotController.capture(pixelRatio: 3);
     String tempPath = (await getTemporaryDirectory()).path;
     String fileName = "resume_";
+
     File file = await File('$tempPath/$fileName.png').create();
     file.writeAsBytesSync(uint8List!);
-    await Share.shareFiles([file.path]);
+    await Share.shareXFiles(file.path as List<XFile>);
   }
 }
